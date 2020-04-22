@@ -15,8 +15,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editName;
     private Button saveBtn;
 
-    private SharedPreferences myPreference;
-    private SharedPreferences.Editor myEditor;
+    private SharedPreferences p;
+    private SharedPreferences.Editor e;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,25 +27,25 @@ public class MainActivity extends AppCompatActivity {
         editName = findViewById(R.id.editName);
         saveBtn = findViewById(R.id.changeButton);
 
-        myPreference = PreferenceManager.getDefaultSharedPreferences(this);
-        myEditor = myPreference.edit();
+        p = PreferenceManager.getDefaultSharedPreferences(this);
+        e = p.edit();
 
-        myEditor.putString("key", editName.getText().toString());
-        myEditor.commit();
-        myPreference.getString("key", "");
+        e.putString("key", editName.getText().toString());
+        e.commit();
+        p.getString("key", "");
         checkSharedPreferences();
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 valueTxt.setText(editName.getText());
-                myEditor.putString(getString(R.string.nameLabel), valueTxt.getText().toString());
-                myEditor.commit();
+                e.putString(getString(R.string.nameLabel), valueTxt.getText().toString());
+                e.commit();
             }
         });
     }
 
     private void checkSharedPreferences(){
-        String savedName = myPreference.getString(getString(R.string.defaultName), "");
+        String savedName = p.getString(getString(R.string.defaultName), "");
         valueTxt.setText(savedName);
     }
 
